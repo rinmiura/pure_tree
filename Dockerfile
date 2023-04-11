@@ -3,7 +3,7 @@ from python:3.9
 ENV PYTHONBUFFERED 1
 
 COPY ./requirements.txt /requirements.txt
-COPY ./entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 COPY ./config /config
 WORKDIR /config
 EXPOSE 8000
@@ -16,7 +16,7 @@ RUN python -m venv /py && \
     adduser user && \
     chown user:user -R /config && \
     chmod +x /config && \
-    chown 755 /entrypoint.sh
+    chmod 755 /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
