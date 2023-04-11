@@ -1,0 +1,62 @@
+body
+{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1em;
+
+    color: #444444;
+    background-color: #d0d0d0;
+}
+h1
+{
+    font-size: 2.5em;
+
+    margin: 2em 0 1em;
+}
+h2
+{
+    margin-bottom: 3em;
+}
+em,
+strong
+{
+    font-weight: 700;
+}
+header
+{
+    text-align: center;
+}
+header p
+{
+    margin-bottom: 2em;
+}
+section
+{
+    margin-bottom: 2em;
+    padding: 0;
+}
+p
+{
+    line-height: 1.5em;
+}
+a
+{
+    color: #444;
+    text-decoration: none;
+}
+.container
+{
+    z-index: 1;
+    margin-bottom: 4em;
+}
+/*
+.main-tree li
+{
+    display: block;
+}
+
+.pure-tree li
+{
+    display: none;
+}

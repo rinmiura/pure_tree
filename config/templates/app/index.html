@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% load treeviewmenu %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Treeview menu</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+<header>
+  <h1>Pure <strong>CSS</strong> Tree</h1>
+  <p>...a folders tree view, without JS :P</p>
+</header>
+{% draw_menu menu_name %}
+</body>
+</html>
