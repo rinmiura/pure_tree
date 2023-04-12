@@ -1,20 +1,9 @@
 from django.template import Library
 from django.utils.html import mark_safe
 from django.db.models import Aggregate, CharField, Count
+from django.contrib.postgres.aggregates import StringAgg
 
 from app.models import Menu
-
-
-class Concat(Aggregate):
-    function = 'GROUP_CONCAT'
-    template = '%(function)s(%(distinct)s%(expressions)s)'
-
-    def __init__(self, expression, distinct=False, **extra):
-        super(Concat, self).__init__(
-            expression,
-            distinct='DISTINCT ' if distinct else '',
-            output_field=CharField(),
-            **extra)
 
 
 register = Library()
@@ -42,7 +31,7 @@ def get_html_tree(nodes, __iter_queryset, urls=None):
         return ''
     html = '<ul>'
     for _node in _set['names'].split(','):
-        urls[_node] = urls.get(_set['parent'], '') + '/' + _node
+        urls[_node] = urls.get(_set['parent'], '/') + _node + '/'
         html += '<li><a href="%s">%s</a></li>' % (urls[_node], _node)
         if _node in nodes:
             nodes.remove(_node)
@@ -53,9 +42,15 @@ def get_html_tree(nodes, __iter_queryset, urls=None):
 
 def get_queryset(nodes):
     queryset = []
-    for obj in Menu.objects.values('parent').annotate(count=Count('parent'), names=Concat('name')).order_by('parent'):
+    for obj in Menu.objects.values('parent').\
+            annotate(
+                count=Count('parent'),
+                names=StringAgg('name', delimiter=',')
+            ).order_by('parent'):
         if obj['parent'] in nodes:
+            obj.update(depth=nodes.index(obj['parent']))
             queryset.append(obj)
+    queryset = sorted(queryset, key=lambda d: d['depth'])
     return queryset
 
 
