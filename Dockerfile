@@ -3,7 +3,7 @@ from python:3.9
 ENV PYTHONBUFFERED 1
 
 COPY ./requirements.txt /requirements.txt
-COPY entrypoint.sh /entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
 COPY ./config /config
 WORKDIR /config
 EXPOSE 8000
